@@ -29,4 +29,3 @@ def obj_id():
     yield response_json['id']
     delete_object = ObjectEndpoints()
     delete_object.delete_by_id(response_json['id'])
-

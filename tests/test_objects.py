@@ -13,6 +13,8 @@ def test_create_object():
     with allure.step('Then create object'):
         response_json = new_object_endpoint.new_object(payload=payload)
     obj_asserts = ObjectAsserts()
+    with allure.step('Then if the request is ok, code 200 will be responced'):
+        assert new_object_endpoint.response.status_code == 200
     with allure.step('Then expected id matches the one you get'):
         obj_asserts.check_response_id(response_json['id'], response_json)
     with allure.step('Then expected name matches the one you get'):
@@ -23,6 +25,8 @@ def test_get_object(obj_id):
     get_obj_endpoint = ObjectEndpoints()
     with allure.step('Then getting an object by id'):
         response_json = get_obj_endpoint.get_by_id(obj_id)
+    with allure.step('Then if the request is ok, code 200 will be responced'):
+        assert get_obj_endpoint.response.status_code == 200
     obj_asserts = ObjectAsserts()
     with allure.step('Then expected id matches the one you get'):
         obj_asserts.check_response_id(obj_id, response_json)
@@ -34,6 +38,8 @@ def test_update_object(obj_id):
     with allure.step('Then updating object'):
         response_json = update_obj_endpoint.update_by_id(obj_id, payload)
     obj_asserts = ObjectAsserts()
+    with allure.step('Then if the request is ok, code 200 will be responced'):
+        assert update_obj_endpoint.response.status_code == 200
     with allure.step('Then expected id matches the one you get'):
         obj_asserts.check_response_id(obj_id, response_json)
     with allure.step('Then expected name matches the one you get'):
