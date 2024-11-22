@@ -1,11 +1,7 @@
 import pytest
-from endpoints.create_object import CreateObject
-from endpoints.delete_object import DeleteObject
+from endpoints.object import ObjectEndpoints
 
-@pytest.fixture()
-def obj_id():
-    create_object = CreateObject()
-    payload = {
+payload_create = {
         'name': 'MSI Katana',
         'data': {
             'year': 2023,
@@ -15,7 +11,21 @@ def obj_id():
         }
     }
 
-    create_object.new_object(payload)
-    yield create_object.response_json['id']
-    delete_object = DeleteObject()
-    delete_object.delete_by_id(create_object.response_json['id'])
+pyload_update = {
+        'name': 'MSI Katana 2',
+        'data': {
+            'year': 2024,
+            'price': 1889.95,
+            'CPU model': 'Intel Core i7',
+            'Graphics card': 'GeForce RTX 4090'
+        }
+    }
+
+@pytest.fixture()
+def obj_id():
+    create_object = ObjectEndpoints()
+    payload = payload_create
+    response_json = create_object.new_object(payload)
+    yield response_json['id']
+    delete_object = ObjectEndpoints()
+    delete_object.delete_by_id(response_json['id'])
