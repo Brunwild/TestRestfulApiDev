@@ -27,6 +27,10 @@ def test_get_object(obj_id):
         response_json = get_obj_endpoint.get_by_id(obj_id)
     with allure.step('Then if the request is ok, code 200 will be responced'):
         assert get_obj_endpoint.response.status_code == 200
+    expected_header_value = 'application/json'
+    with allure.step('Then check the response header'):
+        assert get_obj_endpoint.response.headers['Content-Type'] == expected_header_value, \
+            f"Ожидался заголовок 'Content-Type' со значением '{expected_header_value}', но получено '{get_obj_endpoint.response.headers['Content-Type']}'"
     obj_asserts = ObjectAsserts()
     with allure.step('Then expected id matches the one you get'):
         obj_asserts.check_response_id(obj_id, response_json)
